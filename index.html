@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cozy Library Book Keeper</title>
+  <meta name="description" content="A personal cozy dark-academia book recorder and virtual bookshelf keeper.">
+  <meta name="theme-color" content="#141110">
+
+  <!-- Google Fonts: MonteCarlo (Name band), Cinzel Decorative (Headings), Cormorant Garamond (Body & Spines) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=MonteCarlo&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-view="menu">
+  <!-- Hidden SVG Symbol Definitions for Stickers and Decorations -->
+  <svg style="display: none;" aria-hidden="true">
+    <defs>
+      <!-- Sticker 1: Kawaii White Heart with puffy outline and warm glow -->
+      <g id="sticker-heart">
+        <filter id="sticker-shadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="1.5" stdDeviation="1" flood-color="rgba(0,0,0,0.5)"/>
+        </filter>
+        <!-- Outer white sticker border -->
+        <path d="M16 27.5 C16 27.5 4 20 4 11 C4 6 7.5 2.5 12 2.5 C14.5 2.5 15.5 4 16 5 C16.5 4 17.5 2.5 20 2.5 C24.5 2.5 28 6 28 11 C28 20 16 27.5 16 27.5 Z" 
+              fill="#FFFFFF" stroke="#EDE4D8" stroke-width="2" stroke-linejoin="round" filter="url(#sticker-shadow)"/>
+        <!-- Inner warm white heart body -->
+        <path d="M16 25 C16 25 6 18.5 6 11 C6 7.2 8.8 4.5 12 4.5 C14 4.5 15.2 6 16 6.8 C16.8 6 18 4.5 20 4.5 C23.2 4.5 26 7.2 26 11 C26 18.5 16 25 16 25 Z" 
+              fill="#FFFDF9"/>
+        <!-- Cute highlight shine -->
+        <ellipse cx="10" cy="8.5" rx="2" ry="1.2" transform="rotate(-30 10 8.5)" fill="rgba(255,255,255,0.9)"/>
+      </g>
+
+      <!-- Sticker 2: Cute Red Cross stamp with rounded puffy sticker outline -->
+      <g id="sticker-cross">
+        <!-- White border shape -->
+        <path d="M9 5 C7 5 5 7 5 9 C5 10.5 5.8 11.8 7 12.5 C5.8 13.2 5 14.5 5 16 C5 18 7 20 9 20 C10.5 20 11.8 19.2 12.5 18 C13.2 19.2 14.5 20 16 20 C18 20 20 18 20 16 C20 14.5 19.2 13.2 18 12.5 C19.2 11.8 20 10.5 20 9 C20 7 18 5 16 5 C14.5 5 13.2 5.8 12.5 7 C11.8 5.8 10.5 5 9 5 Z" 
+              transform="scale(1.2) translate(-2, -2)" fill="#FFFFFF" stroke="#E6D3CE" stroke-width="2" stroke-linejoin="round"/>
+        <!-- Warm crimson cross arms with rounded caps -->
+        <line x1="8" y1="8" x2="20" y2="20" stroke="#C44540" stroke-width="4.5" stroke-linecap="round"/>
+        <line x1="20" y1="8" x2="8" y2="20" stroke="#C44540" stroke-width="4.5" stroke-linecap="round"/>
+        <!-- Soft inner glossy line -->
+        <line x1="8.5" y1="7.5" x2="11.5" y2="10.5" stroke="rgba(255,255,255,0.5)" stroke-width="1.8" stroke-linecap="round"/>
+      </g>
+
+      <!-- Sticker 3: Cute Neutral Face sticker with cozy expression -->
+      <g id="sticker-neutral">
+        <!-- Outer puffy sticker outline -->
+        <circle cx="15" cy="15" r="13" fill="#FFFFFF" stroke="#E8E0D2" stroke-width="2" filter="url(#sticker-shadow)"/>
+        <!-- Warm honey-cream face fill -->
+        <circle cx="15" cy="15" r="11" fill="#F7E8CA"/>
+        <!-- Eyes -->
+        <ellipse cx="10.5" cy="13" rx="1.5" ry="1.8" fill="#423026"/>
+        <ellipse cx="19.5" cy="13" rx="1.5" ry="1.8" fill="#423026"/>
+        <circle cx="10" cy="12.3" r="0.6" fill="#FFFFFF"/>
+        <circle cx="19" cy="12.3" r="0.6" fill="#FFFFFF"/>
+        <!-- Soft blush -->
+        <circle cx="8" cy="16.5" r="2" fill="#E8A99B" opacity="0.65"/>
+        <circle cx="22" cy="16.5" r="2" fill="#E8A99B" opacity="0.65"/>
+        <!-- Neutral calm straight mouth -->
+        <line x1="12" y1="18.5" x2="18" y2="18.5" stroke="#423026" stroke-width="1.8" stroke-linecap="round"/>
+      </g>
+
+      <!-- Cozy Teacup with gentle rising steam curls -->
+      <g id="deco-teacup">
+        <path d="M6 14 C6 22 10 25 18 25 C26 25 30 22 30 14 Z" fill="#D8CFBE" stroke="#4A3B32" stroke-width="1.5"/>
+        <!-- Saucer -->
+        <ellipse cx="18" cy="26" rx="16" ry="2.5" fill="#C2B7A3" stroke="#4A3B32" stroke-width="1.2"/>
+        <!-- Handle -->
+        <path d="M29 15 C34 15 34 22 28 23" fill="none" stroke="#4A3B32" stroke-width="1.8" stroke-linecap="round"/>
+        <!-- Tea liquid -->
+        <ellipse cx="18" cy="14" rx="11" ry="2.2" fill="#754728"/>
+        <!-- Steam swirls (CSS animated) -->
+        <path class="steam-curl steam-1" d="M14 11 C13 8 16 6 15 3" fill="none" stroke="rgba(240,230,220,0.6)" stroke-width="1.2" stroke-linecap="round"/>
+        <path class="steam-curl steam-2" d="M19 11 C20 8 18 6 19 2" fill="none" stroke="rgba(240,230,220,0.5)" stroke-width="1.2" stroke-linecap="round"/>
+        <path class="steam-curl steam-3" d="M23 12 C22 9 24 7 23 4" fill="none" stroke="rgba(240,230,220,0.4)" stroke-width="1.1" stroke-linecap="round"/>
+      </g>
+    </defs>
+  </svg>
+
+  <!-- Ambient Environmental Layers -->
+  <div class="ambient-layer" aria-hidden="true">
+    <div class="lamp-glow"></div>
+    <div class="room-vignette"></div>
+
+    <!-- Wood-Toned Seamless Line-Art Doodle Wallpaper -->
+    <svg class="doodle-wallpaper" id="doodle-wallpaper" width="100%" height="100%" aria-hidden="true">
+      <defs>
+        <!-- Seamless Line-Art Doodle Wallpaper Pattern Tile (440x440) -->
+        <pattern id="doodle-pattern" width="440" height="440" patternUnits="userSpaceOnUse">
+          <g stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <!-- 1. Sitting Cat -->
+            <path d="M34 52 C34 44 38 38 46 38 C48 38 49 35 50 32 L53 36 C55 36 57 36 59 36 L62 32 C63 35 64 38 66 38 C74 38 78 44 78 52 C78 62 70 65 56 65 C42 65 34 62 34 52 Z"/>
+            <path d="M75 57 C79 54 82 48 81 43"/>
+            <circle cx="50" cy="45" r="1.2" fill="currentColor"/>
+            <circle cx="62" cy="45" r="1.2" fill="currentColor"/>
+            <polyline points="54,48 56,50 58,48"/>
+
+            <!-- 2. Coffee Mug with Cute Heart -->
+            <path d="M122 40 L122 57 C122 62 126 65 132 65 L144 65 C150 65 154 62 154 57 L154 40 Z"/>
+            <path d="M154 44 C160 44 162 47 162 51 C162 55 159 58 154 58"/>
+            <path d="M134 49 C134 47 137 46 138 48 C139 46 142 47 142 49 C142 52 138 54 138 54 C138 54 134 52 134 49 Z"/>
+
+            <!-- 3. Curled-up Sleeping Cat -->
+            <path d="M214 52 C214 42 224 35 236 35 C246 35 254 41 256 49 C258 57 250 65 238 65 C226 65 214 59 214 52 Z"/>
+            <path d="M250 41 L254 37 L256 42"/>
+            <path d="M240 37 L243 33 L246 37"/>
+            <path d="M232 54 C236 56 242 56 246 52"/>
+
+            <!-- 4. Teacup with Rising Steam -->
+            <path d="M296 46 C296 54 301 58 311 58 C321 58 326 54 326 46 Z"/>
+            <ellipse cx="311" cy="59" rx="14" ry="2"/>
+            <path d="M325 47 C329 47 331 50 328 54"/>
+            <path d="M307 41 C305 38 308 35 306 32"/>
+            <path d="M315 41 C317 38 314 35 316 32"/>
+
+            <!-- 5. Peeking Cat -->
+            <path d="M372 65 L372 48 C372 45 376 41 379 41 L382 37 L385 41 C388 41 392 41 395 41 L398 37 L401 41 C404 41 408 45 408 48 L408 65"/>
+            <circle cx="385" cy="48" r="1.5" fill="currentColor"/>
+            <circle cx="395" cy="48" r="1.5" fill="currentColor"/>
+
+            <!-- 6. Elegant Tulip -->
+            <path d="M42 125 C38 118 43 108 50 116 C57 108 62 118 58 125 C55 130 45 130 42 125 Z"/>
+            <path d="M50 126 L50 148"/>
+            <path d="M50 138 C44 136 42 130 42 130"/>
+            <path d="M50 135 C56 133 58 127 58 127"/>
+
+            <!-- 7. Gentle Daisy Flower -->
+            <circle cx="138" cy="125" r="4"/>
+            <circle cx="138" cy="115" r="3.2"/><circle cx="138" cy="135" r="3.2"/><circle cx="128" cy="125" r="3.2"/><circle cx="148" cy="125" r="3.2"/>
+            <circle cx="131" cy="118" r="3.2"/><circle cx="145" cy="132" r="3.2"/><circle cx="131" cy="132" r="3.2"/><circle cx="145" cy="118" r="3.2"/>
+            <path d="M138 139 L138 156"/>
+
+            <!-- 8. Swirled Rose / Lotus Blossom -->
+            <path d="M230 120 C226 115 234 110 240 116 C246 110 254 115 250 120 C256 126 248 134 240 132 C232 134 224 126 230 120 Z"/>
+            <path d="M237 122 C239 120 242 120 243 123"/>
+            <path d="M240 132 L240 150"/>
+
+            <!-- 9. Delicate Botanical Sprig -->
+            <path d="M320 152 C322 142 328 132 338 124"/>
+            <path d="M322 144 C318 142 318 136 322 138"/>
+            <path d="M326 135 C330 133 332 128 328 130"/>
+            <path d="M333 128 C331 123 336 122 334 126"/>
+
+            <!-- 10. Little Cloud & Raindrops -->
+            <path d="M388 126 C385 126 383 123 385 119 C384 115 389 112 393 114 C395 110 402 110 405 114 C408 112 413 115 412 119 C415 122 413 126 409 126 Z"/>
+            <path d="M394 133 C393 137 396 140 396 140 C396 140 399 137 398 133 C397 131 396 129 396 129 C396 129 395 131 394 133 Z"/>
+            <path d="M404 135 C403 139 406 142 406 142 C406 142 409 139 408 135 C407 133 406 131 406 131 C406 131 405 133 404 135 Z"/>
+
+            <!-- 11. Starlight & 4-Point Sparkles (✨) -->
+            <path d="M48 198 Q48 206 40 206 Q48 206 48 214 Q48 206 56 206 Q48 206 48 198 Z"/>
+            <path d="M78 214 Q78 219 73 219 Q78 219 78 224 Q78 219 83 219 Q78 219 78 214 Z"/>
+
+            <!-- 12. Celestial Five-Point Star -->
+            <polygon points="138,198 140,203 146,203 141,207 143,212 138,208 133,212 135,207 130,203 136,203"/>
+            <line x1="218" y1="202" x2="218" y2="212"/><line x1="213" y1="207" x2="223" y2="207"/>
+
+            <!-- 13. Saturn with Tilted Rings -->
+            <circle cx="310" cy="206" r="8"/>
+            <ellipse cx="310" cy="206" rx="17" ry="4.5" transform="rotate(-25 310 206)"/>
+
+            <!-- 14. Fountain Pen & Feather Quill -->
+            <path d="M386 218 L402 198 L406 201 L390 221 L383 223 Z"/>
+            <line x1="386" y1="218" x2="390" y2="221"/>
+
+            <!-- 15. Open Book -->
+            <path d="M40 286 C46 283 52 285 58 288 L58 303 C52 300 46 298 40 301 Z"/>
+            <path d="M58 288 C64 285 70 283 76 286 L76 301 C70 298 64 300 58 303 Z"/>
+
+            <!-- 16. Stacked Reading Books -->
+            <rect x="122" y="294" width="28" height="6" rx="1"/>
+            <rect x="120" y="286" width="32" height="6" rx="1"/>
+            <line x1="126" y1="294" x2="126" y2="300"/>
+            <line x1="125" y1="286" x2="125" y2="292"/>
+
+            <!-- 17. Ballerina Pointe Shoes with Criss-Cross Ribbons -->
+            <path d="M216 286 C214 296 218 305 222 305 C226 305 228 296 224 286 Z"/>
+            <path d="M228 286 C226 296 230 305 234 305 C238 305 240 296 236 286 Z"/>
+            <line x1="217" y1="286" x2="225" y2="276"/><line x1="223" y1="286" x2="215" y2="276"/>
+            <line x1="229" y1="286" x2="237" y2="276"/><line x1="235" y1="286" x2="227" y2="276"/>
+
+            <!-- 18. Magnifying Glass -->
+            <circle cx="310" cy="286" r="9"/>
+            <line x1="316" y1="292" x2="326" y2="302" stroke-width="2.5"/>
+
+            <!-- 19. Royal Academic Crown -->
+            <path d="M386 300 L389 285 L395 293 L401 283 L407 293 L413 285 L416 300 Z"/>
+            <circle cx="389" cy="284" r="1" fill="currentColor"/>
+            <circle cx="401" cy="282" r="1" fill="currentColor"/>
+            <circle cx="413" cy="284" r="1" fill="currentColor"/>
+
+            <!-- 20. Oak / Ginkgo Leaf -->
+            <path d="M48 360 C40 355 45 342 55 348 C65 342 70 355 62 360 C58 368 52 368 48 360 Z"/>
+            <line x1="55" y1="348" x2="55" y2="368"/>
+
+            <!-- 21. Crescent Moon -->
+            <path d="M136 345 C126 345 120 355 125 365 C130 375 142 375 145 368 C138 368 132 360 136 345 Z"/>
+
+            <!-- 22. Lit Candle with Flame -->
+            <rect x="214" y="352" width="10" height="19" rx="1"/>
+            <line x1="219" y1="352" x2="219" y2="348"/>
+            <path d="M219 348 C216 345 216 340 219 338 C222 340 222 345 219 348 Z"/>
+
+            <!-- 23. Ribbon Bookmark -->
+            <path d="M255 345 L267 345 L267 372 L261 366 L255 372 Z"/>
+
+            <!-- 24. Vintage Teapot -->
+            <ellipse cx="320" cy="360" rx="12" ry="9"/>
+            <path d="M308 358 C302 356 301 350 304 348 L308 352"/>
+            <path d="M332 354 C338 354 340 364 332 366"/>
+            <path d="M315 351 C317 348 323 348 325 351"/>
+            <circle cx="320" cy="347" r="1.5" fill="currentColor"/>
+
+            <!-- 25. Reading Spectacles -->
+            <circle cx="390" cy="358" r="7"/>
+            <circle cx="410" cy="358" r="7"/>
+            <path d="M397 356 C400 354 403 354 403 356"/>
+            <line x1="383" y1="356" x2="376" y2="352"/>
+            <line x1="417" y1="356" x2="424" y2="352"/>
+
+            <!-- 26. Wise Little Owl -->
+            <path d="M45 415 C45 405 50 400 55 403 L58 400 L61 403 C66 400 71 405 71 415 C71 425 66 428 58 428 C50 428 45 425 45 415 Z"/>
+            <circle cx="52" cy="412" r="2.5"/><circle cx="64" cy="412" r="2.5"/>
+            <polygon points="56,416 60,416 58,419" fill="currentColor"/>
+
+            <!-- 27. Gentle Butterfly -->
+            <path d="M125 410 C118 400 110 405 118 415 C110 420 118 428 123 420"/>
+            <path d="M127 410 C134 400 142 405 134 415 C142 420 134 428 129 420"/>
+            <line x1="126" y1="408" x2="126" y2="422"/>
+
+            <!-- 28. Antique Skeleton Key -->
+            <circle cx="218" cy="415" r="6"/>
+            <line x1="224" y1="415" x2="243" y2="415"/>
+            <line x1="238" y1="415" x2="238" y2="420"/>
+            <line x1="243" y1="415" x2="243" y2="421"/>
+
+            <!-- 29. Antique Ink Bottle with Cork -->
+            <path d="M312 425 L312 415 L316 415 L316 410 L326 410 L326 415 L330 415 L330 425 Z"/>
+            <rect x="318" y="407" width="6" height="3" rx="0.5"/>
+
+            <!-- 30. Sealed Letter Envelope -->
+            <rect x="390" y="412" width="22" height="15" rx="1"/>
+            <polyline points="390,412 401,421 412,412"/>
+          </g>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#doodle-pattern)"/>
+    </svg>
+    <div class="dust-specks-container" id="dust-specks"></div>
+  </div>
+
+  <!-- Global Dimmer & Ambient Sound Bar (Top Persistent Accessory) -->
+  <header class="ambient-dock" aria-label="Room Controls">
+    <div class="dock-left">
+      <button type="button" class="dock-btn" id="btn-dock-menu" title="Open Today's Menu" aria-label="Go to Today's Menu">
+        <span class="dock-icon">☕</span>
+        <span class="dock-label">Today's Menu</span>
+      </button>
+    </div>
+    
+    <div class="dock-center">
+      <!-- Cozy Procedural Web Audio Soundscape Control -->
+      <div class="audio-control-cluster" id="audio-cluster">
+        <button type="button" class="dock-btn" id="btn-sound-toggle" title="Toggle Cozy Sounds" aria-label="Toggle Cozy Audio">
+          <span class="dock-icon" id="sound-icon">🔈</span>
+          <span class="dock-label" id="sound-status-label">Sound: Off</span>
+        </button>
+        <div class="sound-popover" id="sound-popover" hidden>
+          <div class="sound-popover-title">Ambient Soundscape</div>
+          <div class="sound-options">
+            <button type="button" class="sound-chip active" data-sound="off">Off</button>
+            <button type="button" class="sound-chip" data-sound="rain">🌧️ Soft Rain</button>
+            <button type="button" class="sound-chip" data-sound="fireplace">🔥 Fireplace</button>
+          </div>
+          <div class="volume-slider-group">
+            <label for="sound-volume-slider">Volume</label>
+            <input type="range" id="sound-volume-slider" min="0" max="1" step="0.05" value="0.25">
+          </div>
+        </div>
+      </div>
+
+      <!-- Room Light Dimmer Control -->
+      <div class="dimmer-cluster" title="Adjust cozy room brightness">
+        <span class="dimmer-icon">🕯️</span>
+        <label for="room-dimmer-input" class="sr-only">Room Light</label>
+        <input type="range" id="room-dimmer-input" min="0.4" max="1.1" step="0.05" value="0.85" title="Room light">
+      </div>
+    </div>
+
+    <div class="dock-right">
+      <button type="button" class="dock-btn" id="btn-open-side-drawer" title="Open Side Menu" aria-label="Open Side Menu">
+        <span class="dock-icon">☰</span>
+        <span class="dock-label">Menu</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main View Container -->
+  <main class="main-content">
+    
+    <!-- ========================================== -->
+    <!-- SCREEN 1: TODAY'S MENU BOARD               -->
+    <!-- ========================================== -->
+    <section class="view-panel" id="view-menu" aria-label="Today's Menu Screen">
+      <div class="menu-board-wrapper">
+        <div class="menu-board-card">
+          <!-- Wavy / Scalloped Decorative Inner Border -->
+          <div class="menu-scallop-border">
+            <div class="menu-board-inner">
+              
+              <div class="menu-header">
+                <div class="menu-ornament-top">❧ ☕ ❧</div>
+                <h1 class="menu-title">Today's Menu</h1>
+                <p class="menu-subtitle">A quiet haven for stories resting upon your shelves</p>
+                <div class="menu-divider-line"></div>
+              </div>
+
+              <!-- Primary Action: Create New Library -->
+              <div class="menu-actions">
+                <button type="button" class="btn-menu-action" id="btn-menu-create-lib">
+                  <span class="btn-action-icon">📖</span>
+                  <span class="btn-action-text">Create New Library</span>
+                  <span class="btn-action-arrow">→</span>
+                </button>
+              </div>
+
+              <!-- Saved Libraries List -->
+              <div class="menu-libraries-section">
+                <h2 class="menu-section-heading">Your Shelves</h2>
+                
+                <div class="libraries-list" id="menu-libraries-container">
+                  <!-- Dynamically rendered library cards -->
+                </div>
+
+                <!-- Empty State -->
+                <div class="menu-empty-state" id="menu-empty-state">
+                  <p class="empty-quote">"A room without books is like a body without a soul."</p>
+                  <p class="empty-hint">You haven't opened any libraries yet. Create your first reading room or load a cozy sample library!</p>
+                  <button type="button" class="btn-secondary" id="btn-load-sample-empty">
+                    ☕ Load "The Midnight Study" Sample
+                  </button>
+                </div>
+              </div>
+
+              <!-- Menu Board Footer (Backup & Sample actions) -->
+              <div class="menu-footer">
+                <div class="backup-button-row">
+                  <button type="button" class="btn-text-action" id="btn-backup-export" title="Download your libraries as a JSON file">
+                    💾 Save my libraries
+                  </button>
+                  <span class="footer-separator">•</span>
+                  <button type="button" class="btn-text-action" id="btn-backup-import" title="Restore libraries from a JSON file">
+                    📂 Load my libraries
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SCREEN 2: INSIDE A LIBRARY (BOOKSHELVES)   -->
+    <!-- ========================================== -->
+    <section class="view-panel" id="view-library" aria-label="Bookshelf Screen" hidden>
+      <div class="shelf-room-container">
+        
+        <!-- Shelf Unit with Perimeter Frame -->
+        <div class="shelf-unit" id="shelf-unit">
+          
+          <!-- Top Crown Molding of Shelf -->
+          <div class="shelf-crown"></div>
+
+          <!-- Upper Shelf Row -->
+          <div class="shelf-level" id="shelf-upper-level">
+            <div class="shelf-compartment">
+              <!-- Inline Wood Dividers & Book Slots -->
+              <div class="divider-post post-left"></div>
+              <div class="books-track" id="track-upper" role="region" aria-label="Upper Shelf Books">
+                <!-- Book Spines rendered here -->
+              </div>
+              <div class="divider-post post-right"></div>
+            </div>
+            <!-- Horizontal Shelf Plank with Drop Shadow -->
+            <div class="shelf-plank"></div>
+          </div>
+
+          <!-- Central Name Band (6 to 8 cm thick on desktop, ~240-280px; 110-140px on mobile) -->
+          <div class="name-band" id="shelf-name-band" role="banner">
+            <!-- Subtle Ambient Shining Glimmers & Sparkles -->
+            <div class="name-band-sparkles" aria-hidden="true">
+              <span class="glimmer-star star-1">✦</span>
+              <span class="glimmer-star star-2">✧</span>
+              <span class="glimmer-star star-3">✦</span>
+              <span class="glimmer-star star-4">✧</span>
+              <span class="glimmer-star star-5">✦</span>
+              <span class="glimmer-star star-6">✧</span>
+            </div>
+            <!-- Soft Golden Aura Halo behind the dramatic title -->
+            <div class="band-golden-halo" aria-hidden="true"></div>
+
+            <div class="name-band-decorations" aria-hidden="true">
+              <!-- Steaming Teacup ornament resting on the band ledge -->
+              <div class="teacup-ornament" title="A hot cup of Earl Grey">
+                <svg viewBox="0 0 36 30" class="svg-teacup-art">
+                  <use href="#deco-teacup"></use>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Center Library Title in MonteCarlo with Decorative Flourishes -->
+            <div class="library-title-container">
+              <span class="band-flourish flourish-left" aria-hidden="true">❧ ✧</span>
+              <h1 class="library-name-title" id="library-display-title">My Cozy Library</h1>
+              <span class="band-flourish flourish-right" aria-hidden="true">✧ ❧</span>
+            </div>
+            <div class="name-band-sub-info" id="library-book-count-badge">0 stories resting</div>
+          </div>
+
+          <!-- Lower Shelf Row -->
+          <div class="shelf-level" id="shelf-lower-level">
+            <div class="shelf-compartment">
+              <div class="divider-post post-left"></div>
+              <div class="books-track" id="track-lower" role="region" aria-label="Lower Shelf Books">
+                <!-- Book Spines rendered here -->
+              </div>
+              <div class="divider-post post-right"></div>
+            </div>
+            <div class="shelf-plank"></div>
+          </div>
+
+          <!-- Shelf Navigation Rail (Step up / down across unlimited shelves) -->
+          <div class="shelf-nav-rail" id="shelf-nav-rail" aria-label="Shelf Navigation Controls">
+            <button type="button" class="btn-shelf-nav" id="btn-shelf-up" title="Scroll Up a Shelf (Arrow Up)" aria-label="Scroll Up a Shelf">
+              ▲
+            </button>
+            <div class="shelf-indicator-badge" id="shelf-indicator-badge" title="Visible shelf rows">
+              <span id="shelf-page-indicator">Shelves 1–2 of 2</span>
+            </div>
+            <button type="button" class="btn-shelf-nav" id="btn-shelf-down" title="Scroll Down a Shelf (Arrow Down)" aria-label="Scroll Down a Shelf">
+              ▼
+            </button>
+          </div>
+
+          <!-- Shelf Base Floorboard -->
+          <div class="shelf-base"></div>
+        </div>
+
+        <!-- Floating Action Button Cluster: Move Stories ⇄ & Add Stories + -->
+        <div class="fab-cluster" id="fab-cluster">
+          <button type="button" class="fab-btn fab-move-stories" id="fab-move-stories" title="Move stories to another library" aria-label="Move Stories to another library">
+            <span class="fab-icon">⇄</span>
+            <span class="fab-text">Move Stories</span>
+          </button>
+          <button type="button" class="fab-btn fab-add-story" id="fab-add-story" aria-label="Add Stories to this shelf">
+            <span class="fab-plus">+</span>
+            <span class="fab-text">Add Stories</span>
+          </button>
+        </div>
+
+        <!-- Floating Selection Mode Banner for Moving Stories -->
+        <div class="selection-mode-banner" id="selection-mode-banner" hidden>
+          <div class="selection-banner-info">
+            <span class="selection-banner-title">Pick the stories to move</span>
+            <span class="selection-counter" id="selection-counter">0 selected</span>
+          </div>
+          <div class="selection-banner-actions">
+            <button type="button" class="btn-selection-cancel" id="btn-cancel-selection">Cancel</button>
+            <button type="button" class="btn-selection-move" id="btn-submit-selection" disabled>Move to... →</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================== -->
+  <!-- SIDE NAVIGATION DRAWER (Slide-over panel)  -->
+  <!-- ========================================== -->
+  <div class="drawer-overlay" id="drawer-overlay" hidden></div>
+  <aside class="side-drawer" id="side-drawer" aria-label="Library Navigation Menu" hidden>
+    <div class="drawer-header">
+      <button type="button" class="drawer-icon-btn" id="btn-drawer-back" title="Back to Today's Menu" aria-label="Back to Today's Menu">
+        ← Menu
+      </button>
+      <h2 class="drawer-title">Study Menu</h2>
+      <button type="button" class="drawer-icon-btn" id="btn-drawer-close" title="Close Side Menu" aria-label="Close Side Menu">
+        ✕
+      </button>
+    </div>
+
+    <div class="drawer-content">
+      <!-- Section: Library Switcher -->
+      <div class="drawer-section">
+        <h3 class="drawer-section-title">Your Libraries</h3>
+        <ul class="drawer-library-list" id="drawer-library-list">
+          <!-- Dynamic library links -->
+        </ul>
+        <button type="button" class="btn-drawer-action" id="btn-drawer-create-lib">
+          + Create New Library
+        </button>
+      </div>
+
+      <!-- Section: Current Library Management -->
+      <div class="drawer-section" id="drawer-current-lib-section">
+        <h3 class="drawer-section-title">Current Library</h3>
+        <button type="button" class="drawer-link-btn" id="btn-drawer-edit-current">
+          ✏️ Edit Library Details
+        </button>
+        <button type="button" class="drawer-link-btn danger" id="btn-drawer-delete-current">
+          🗑️ Delete This Library
+        </button>
+      </div>
+
+      <!-- Section: Ambience & Atmosphere -->
+      <div class="drawer-section">
+        <h3 class="drawer-section-title">Ambience</h3>
+        <div class="drawer-setting-row">
+          <span>🕯️ Room Light</span>
+          <input type="range" id="drawer-dimmer-slider" min="0.4" max="1.1" step="0.05" value="0.85">
+        </div>
+      </div>
+
+      <!-- Section: Data Preservation -->
+      <div class="drawer-section">
+        <h3 class="drawer-section-title">Data & Backups</h3>
+        <p class="drawer-hint">Your books live in your browser's private memory. Save a backup copy to keep them safe forever.</p>
+        <div class="drawer-btn-stack">
+          <button type="button" class="btn-drawer-action secondary" id="btn-drawer-export">
+            💾 Save my libraries (.json)
+          </button>
+          <button type="button" class="btn-drawer-action secondary" id="btn-drawer-import">
+            📂 Load my libraries (.json)
+          </button>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ========================================== -->
+  <!-- MODAL 1: QUICK BOOK POP-UP (On tap book)   -->
+  <!-- ========================================== -->
+  <dialog class="cozy-modal modal-quick-book" id="modal-quick-book">
+    <div class="quick-book-card">
+      <div class="quick-book-header">
+        <h3 class="quick-book-title" id="quick-book-name">Book Title</h3>
+        <button type="button" class="modal-close-btn" id="btn-quick-close" aria-label="Close pop-up">✕</button>
+      </div>
+      <p class="quick-book-author" id="quick-book-author">By Author Name</p>
+      
+      <div class="quick-book-actions">
+        <button type="button" class="btn-quick-action" id="btn-quick-move" title="Move story to another library">
+          ⇄ Move
+        </button>
+        <button type="button" class="btn-quick-action" id="btn-quick-change-name">
+          ✏️ Rename
+        </button>
+        <button type="button" class="btn-quick-action primary" id="btn-quick-details">
+          📜 Details
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ========================================== -->
+  <!-- MODAL 2: MORE ABOUT POP-UP (Deep details)  -->
+  <!-- ========================================== -->
+  <dialog class="cozy-modal modal-details" id="modal-details">
+    <div class="details-card">
+      <div class="details-header">
+        <h2 class="details-title" id="details-book-name">The Secret History</h2>
+        <button type="button" class="modal-close-btn" id="btn-details-close" aria-label="Close details">✕</button>
+      </div>
+
+      <div class="details-body">
+        <div class="details-meta-row">
+          <div class="details-meta-text">
+            <p class="details-author-line"><strong>Author:</strong> <span id="details-author">Donna Tartt</span></p>
+            <p class="details-genre-line"><strong>Genre:</strong> <span id="details-genre">Dark Academia / Fiction</span></p>
+          </div>
+          <!-- Cute sticker badge beside details -->
+          <div class="details-sticker-badge" id="details-sticker-container" title="Book remark sticker">
+            <!-- Inline SVG sticker injected here -->
+          </div>
+        </div>
+
+        <div class="details-desc-box">
+          <h4 class="details-desc-heading">Notes & Impressions</h4>
+          <div class="details-description-text" id="details-description">
+            No notes written yet for this story.
+          </div>
+        </div>
+      </div>
+
+      <div class="details-footer">
+        <button type="button" class="btn-secondary" id="btn-details-delete">
+          🗑️ Delete Story
+        </button>
+        <button type="button" class="btn-primary" id="btn-details-edit">
+          ✏️ Edit Story
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ========================================== -->
+  <!-- MODAL 3: QUICK CHANGE NAME PROMPT          -->
+  <!-- ========================================== -->
+  <dialog class="cozy-modal modal-small" id="modal-change-name">
+    <form class="cozy-form" id="form-change-name" method="dialog">
+      <h3 class="modal-title">Change Book Name</h3>
+      <div class="form-group">
+        <label for="input-quick-name">New Title</label>
+        <input type="text" id="input-quick-name" required maxlength="120" placeholder="Enter book title...">
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="btn-cancel-quick-name">Cancel</button>
+        <button type="submit" class="btn-primary">Update</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- ========================================== -->
+  <!-- MODAL 4: CREATE / EDIT LIBRARY FORM        -->
+  <!-- ========================================== -->
+  <dialog class="cozy-modal modal-form-dialog" id="modal-library-form">
+    <form class="cozy-form" id="form-library" method="dialog">
+      <div class="form-header">
+        <h2 class="modal-title" id="library-form-title">Create New Library</h2>
+        <button type="button" class="modal-close-btn" id="btn-lib-form-close" aria-label="Close form">✕</button>
+      </div>
+
+      <div class="form-body">
+        <!-- 1. Library Name -->
+        <div class="form-group">
+          <label for="input-lib-name">Library Name</label>
+          <input type="text" id="input-lib-name" required maxlength="60" placeholder="e.g. Midnight Study, Winter Archives...">
+        </div>
+
+        <!-- 2. Shelf Wood Swatches -->
+        <div class="form-group">
+          <label id="label-shelf-wood">Choose your shelf wood</label>
+          <div class="wood-swatches-grid" role="radiogroup" aria-labelledby="label-shelf-wood">
+            
+            <label class="wood-swatch-card" data-wood="cafe-noir">
+              <input type="radio" name="shelf-wood" value="cafe-noir" checked>
+              <div class="swatch-preview wood-cafe-noir">
+                <div class="swatch-wood-grain"></div>
+              </div>
+              <div class="swatch-info">
+                <span class="swatch-title">Café Noir</span>
+                <span class="swatch-desc">Rich coffee-brown wood</span>
+              </div>
+            </label>
+
+            <label class="wood-swatch-card" data-wood="dark-olive">
+              <input type="radio" name="shelf-wood" value="dark-olive">
+              <div class="swatch-preview wood-dark-olive">
+                <div class="swatch-wood-grain"></div>
+              </div>
+              <div class="swatch-info">
+                <span class="swatch-title">Dark Olive</span>
+                <span class="swatch-desc">Deep olive-green wood</span>
+              </div>
+            </label>
+
+            <label class="wood-swatch-card" data-wood="strawberry-coral">
+              <input type="radio" name="shelf-wood" value="strawberry-coral">
+              <div class="swatch-preview wood-strawberry-coral">
+                <div class="swatch-wood-grain"></div>
+              </div>
+              <div class="swatch-info">
+                <span class="swatch-title">Strawberry Coral</span>
+                <span class="swatch-desc">Warm coral-red wood</span>
+              </div>
+            </label>
+
+          </div>
+        </div>
+
+        <!-- 3. Name Colour (Custom Wheel Picker) -->
+        <div class="form-group">
+          <label>Name Colour (on the name band)</label>
+          <div class="color-wheel-wrapper" id="lib-name-wheel-container">
+            <div class="wheel-canvas-box">
+              <canvas class="color-wheel-canvas" id="canvas-lib-wheel" width="180" height="180" title="Click or drag to pick a hue"></canvas>
+              <div class="wheel-reticle" id="reticle-lib-wheel"></div>
+            </div>
+            <div class="wheel-controls">
+              <div class="slider-row">
+                <label for="slider-lib-lightness">Lightness</label>
+                <input type="range" id="slider-lib-lightness" min="15" max="95" value="82">
+              </div>
+              <div class="color-preview-row">
+                <div class="color-swatch-chip" id="chip-lib-color" style="background-color: #EBD9B4;"></div>
+                <input type="text" class="color-hex-input" id="input-lib-hex" value="#EBD9B4" maxlength="7" spellcheck="false">
+                <!-- Native input fallback -->
+                <input type="color" class="color-native-fallback" id="native-lib-color" value="#EBD9B4" title="Native Color Picker">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="btn-cancel-lib-form">Cancel</button>
+        <button type="submit" class="btn-primary" id="btn-submit-lib-form">Create Library</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- ========================================== -->
+  <!-- MODAL 5: ADD / EDIT BOOK FORM              -->
+  <!-- ========================================== -->
+  <dialog class="cozy-modal modal-form-dialog" id="modal-book-form">
+    <form class="cozy-form" id="form-book" method="dialog">
+      <div class="form-header">
+        <h2 class="modal-title" id="book-form-title">Add Stories +</h2>
+        <button type="button" class="modal-close-btn" id="btn-book-form-close" aria-label="Close book form">✕</button>
+      </div>
+
+      <div class="form-body">
+        <div class="form-row-2">
+          <!-- Book Name -->
+          <div class="form-group flex-2">
+            <label for="input-book-name">Book Name *</label>
+            <input type="text" id="input-book-name" required maxlength="120" placeholder="e.g. The Picture of Dorian Gray">
+          </div>
+          <!-- Genre -->
+          <div class="form-group flex-1">
+            <label for="input-book-genre">Genre</label>
+            <input type="text" id="input-book-genre" maxlength="40" placeholder="e.g. Classic / Gothic">
+          </div>
+        </div>
+
+        <!-- Author -->
+        <div class="form-group">
+          <label for="input-book-author">Author</label>
+          <input type="text" id="input-book-author" maxlength="80" placeholder="e.g. Oscar Wilde">
+        </div>
+
+        <!-- Spine Colour Picker (Colour Wheel) -->
+        <div class="form-group">
+          <label>Spine Colour</label>
+          <div class="color-wheel-wrapper" id="book-spine-wheel-container">
+            <div class="wheel-canvas-box">
+              <canvas class="color-wheel-canvas" id="canvas-book-wheel" width="180" height="180" title="Click or drag to pick a hue"></canvas>
+              <div class="wheel-reticle" id="reticle-book-wheel"></div>
+            </div>
+            <div class="wheel-controls">
+              <div class="slider-row">
+                <label for="slider-book-lightness">Lightness</label>
+                <input type="range" id="slider-book-lightness" min="15" max="85" value="45">
+              </div>
+              <div class="color-preview-row">
+                <div class="color-swatch-chip" id="chip-book-color" style="background-color: #5A3528;"></div>
+                <input type="text" class="color-hex-input" id="input-book-hex" value="#5A3528" maxlength="7" spellcheck="false">
+                <input type="color" class="color-native-fallback" id="native-book-color" value="#5A3528" title="Native Color Picker">
+              </div>
+              <!-- Cozy Spine Palette Presets -->
+              <div class="color-palette-presets" id="book-palette-presets">
+                <button type="button" class="preset-chip" data-color="#5A3528" style="background-color: #5A3528;" title="Oxblood"></button>
+                <button type="button" class="preset-chip" data-color="#2D4133" style="background-color: #2D4133;" title="Forest Pine"></button>
+                <button type="button" class="preset-chip" data-color="#2B3A4E" style="background-color: #2B3A4E;" title="Midnight Blue"></button>
+                <button type="button" class="preset-chip" data-color="#73532C" style="background-color: #73532C;" title="Aged Amber"></button>
+                <button type="button" class="preset-chip" data-color="#61304B" style="background-color: #61304B;" title="Mulberry Plum"></button>
+                <button type="button" class="preset-chip" data-color="#3D3B39" style="background-color: #3D3B39;" title="Charcoal"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Book Remark: Cute Sticker Picker -->
+        <div class="form-group">
+          <label>Book Remark (Sticker)</label>
+          <div class="sticker-selector-grid">
+            <label class="sticker-choice-card">
+              <input type="radio" name="book-sticker" value="none" checked>
+              <div class="sticker-choice-visual empty">
+                <span class="no-sticker-dash">—</span>
+              </div>
+              <span class="sticker-choice-label">None</span>
+            </label>
+
+            <label class="sticker-choice-card">
+              <input type="radio" name="book-sticker" value="heart">
+              <div class="sticker-choice-visual">
+                <svg viewBox="0 0 32 32" class="choice-svg"><use href="#sticker-heart"></use></svg>
+              </div>
+              <span class="sticker-choice-label">Loved</span>
+            </label>
+
+            <label class="sticker-choice-card">
+              <input type="radio" name="book-sticker" value="cross">
+              <div class="sticker-choice-visual">
+                <svg viewBox="0 0 28 28" class="choice-svg"><use href="#sticker-cross"></use></svg>
+              </div>
+              <span class="sticker-choice-label">Dropped</span>
+            </label>
+
+            <label class="sticker-choice-card">
+              <input type="radio" name="book-sticker" value="neutral">
+              <div class="sticker-choice-visual">
+                <svg viewBox="0 0 30 30" class="choice-svg"><use href="#sticker-neutral"></use></svg>
+              </div>
+              <span class="sticker-choice-label">Neutral</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group">
+          <label for="input-book-desc">Description / Cozy Notes</label>
+          <textarea id="input-book-desc" rows="4" placeholder="Favorite quotes, thoughts on the ending, why you picked it up..."></textarea>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="btn-cancel-book-form">Cancel</button>
+        <button type="submit" class="btn-primary" id="btn-submit-book-form">Place on Shelf</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- ========================================== -->
+  <!-- MODAL 6: COZY CONFIRMATION DIALOG          -->
+  <!-- ========================================== -->
+  <dialog class="cozy-modal modal-small" id="modal-confirm">
+    <div class="confirm-card">
+      <div class="confirm-icon">📜</div>
+      <h3 class="modal-title" id="confirm-title">Are you sure?</h3>
+      <p class="confirm-message" id="confirm-message">This action cannot be undone.</p>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="btn-confirm-cancel">Cancel</button>
+        <button type="button" class="btn-primary danger" id="btn-confirm-ok">Confirm</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ========================================== -->
+  <!-- MODAL 7: BACKUP RESTORE OPTIONS            -->
+  <!-- ========================================== -->
+  <dialog class="cozy-modal modal-small" id="modal-restore-choice">
+    <div class="confirm-card">
+      <div class="confirm-icon">📂</div>
+      <h3 class="modal-title">Load Libraries</h3>
+      <p class="confirm-message" id="restore-message">How would you like to restore your library data?</p>
+      <div class="modal-actions column">
+        <button type="button" class="btn-primary" id="btn-restore-merge">
+          Merge with current libraries
+        </button>
+        <button type="button" class="btn-secondary danger" id="btn-restore-replace">
+          Replace all existing libraries
+        </button>
+        <button type="button" class="btn-text-action" id="btn-restore-cancel">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ========================================== -->
+  <!-- MODAL 8: MOVE DESTINATION LIBRARY PICKER   -->
+  <!-- ========================================== -->
+  <dialog class="cozy-modal modal-small" id="modal-move-picker">
+    <div class="confirm-card move-picker-card">
+      <div class="confirm-icon">⇄</div>
+      <h3 class="modal-title">Move Stories</h3>
+      <p class="confirm-message" id="move-picker-subtitle">Select which reading room to move these stories to:</p>
+      
+      <!-- List of other libraries -->
+      <div class="move-dest-list" id="move-dest-list">
+        <!-- Injected dynamically -->
+      </div>
+
+      <!-- Single library tip (if user has only 1 library) -->
+      <div class="move-single-lib-tip" id="move-single-lib-tip" hidden>
+        <p class="empty-hint">You only have one library right now. Create another reading room first to move stories!</p>
+        <button type="button" class="btn-secondary" id="btn-move-create-lib-shortcut">
+          + Create Another Library
+        </button>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="btn-move-cancel">Cancel</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Hidden File Input for Backup Restoration -->
+  <input type="file" id="backup-file-input" accept=".json" style="display: none;" aria-hidden="true">
+
+  <!-- Floating Toast Notification -->
+  <div class="cozy-toast" id="cozy-toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
