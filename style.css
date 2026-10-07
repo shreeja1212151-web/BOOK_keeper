@@ -2363,6 +2363,770 @@ button {
 }
 
 /* --------------------------------------------------------------------------
+   18. Upgraded Features: Search Desk, Quotes Journal, Wishlist, Tavern Lady
+   -------------------------------------------------------------------------- */
+
+/* Navigation additions in Dock & Drawer */
+.dock-btn {
+  white-space: nowrap;
+}
+
+.storage-reminder-note {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+/* Today's Menu Library Card Action Row */
+.menu-lib-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Wishlist Badges & Styling */
+.badge-wishlist {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(196, 69, 64, 0.25);
+  border: 1px solid rgba(212, 102, 97, 0.5);
+  color: #f7b2af;
+  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-left: 6px;
+}
+
+.btn-wishlist-action {
+  border-color: rgba(212, 102, 97, 0.4) !important;
+}
+
+.btn-wishlist-action:hover {
+  border-color: #d46661 !important;
+  box-shadow: 0 4px 16px rgba(196, 69, 64, 0.3) !important;
+}
+
+/* Reading Status Selector in Forms */
+.reading-status-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.status-choice-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.status-choice-card input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.status-chip-label {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 8px 6px;
+  background: var(--bg-card-inner);
+  border: 1px solid var(--border-dim);
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-muted);
+  transition: all 0.2s ease;
+}
+
+.status-choice-card input[type="radio"]:checked + .status-chip-label {
+  background: rgba(201, 167, 105, 0.18);
+  border-color: var(--gold-accent);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 0 10px rgba(201, 167, 105, 0.25);
+}
+
+/* Status Badges in Book Details & Search */
+.status-badge-pill {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  background: rgba(82, 68, 57, 0.4);
+  color: var(--text-parchment);
+  border: 1px solid var(--border-light);
+}
+
+.status-badge-pill.status-reading {
+  background: rgba(65, 117, 164, 0.25);
+  border-color: #5d9ad4;
+  color: #aed5fc;
+}
+
+.status-badge-pill.status-to-read {
+  background: rgba(186, 137, 54, 0.25);
+  border-color: #e0aa53;
+  color: #f7dca3;
+}
+
+.status-badge-pill.status-finished {
+  background: rgba(62, 137, 85, 0.25);
+  border-color: #5ab376;
+  color: #a8ecc0;
+}
+
+/* Book Details Quotes Section */
+.details-quotes-box {
+  margin-top: 16px;
+  background: rgba(14, 12, 11, 0.5);
+  border: 1px dashed var(--border-light);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+
+.details-quotes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.details-quotes-header .details-desc-heading {
+  margin-bottom: 0;
+}
+
+.btn-text-small {
+  font-size: 13px;
+  color: var(--text-gold);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: color 0.2s;
+}
+
+.btn-text-small:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+.details-quote-item {
+  font-style: italic;
+  font-size: 15px;
+  color: var(--text-parchment);
+  border-left: 2px solid var(--gold-accent);
+  padding: 4px 0 4px 10px;
+  margin-bottom: 8px;
+}
+
+.details-quote-meta {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-style: normal;
+  margin-top: 2px;
+}
+
+/* Tavern Lady Empty States */
+.tavern-lady-card {
+  margin: 18px 0;
+  padding: 20px 24px;
+  background: linear-gradient(135deg, rgba(32, 26, 22, 0.85) 0%, rgba(22, 18, 15, 0.95) 100%);
+  border: 1px solid rgba(201, 167, 105, 0.35);
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 0, 0, 0.4);
+  position: relative;
+  text-align: left;
+}
+
+.tavern-lady-card::before {
+  content: "❧ ☕ ❧";
+  display: block;
+  font-size: 12px;
+  color: var(--text-gold);
+  text-align: center;
+  letter-spacing: 4px;
+  margin-bottom: 10px;
+}
+
+.tavern-lady-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.tavern-lady-icon {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.tavern-lady-speaker {
+  font-family: var(--font-heading);
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: var(--text-gold);
+}
+
+.tavern-lady-speech {
+  font-size: 17px;
+  line-height: 1.6;
+  font-style: italic;
+  color: #f0e6d8;
+  margin-bottom: 8px;
+}
+
+.tavern-lady-fact {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text-parchment);
+  background: rgba(14, 12, 11, 0.45);
+  border-left: 2px solid var(--gold-accent);
+  padding: 8px 12px;
+  border-radius: 0 8px 8px 0;
+  margin-top: 10px;
+}
+
+.shelf-empty-tavern-box {
+  padding: 24px 20px;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+/* ==========================================================================
+   Screen 3: Universal Search Desk
+   ========================================================================== */
+.search-desk-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 24px 16px 50px;
+  min-height: 80vh;
+}
+
+.search-desk-card {
+  width: 100%;
+  max-width: 860px;
+  background: var(--bg-card);
+  border-radius: 20px;
+  box-shadow: 0 14px 45px rgba(0, 0, 0, 0.75), inset 0 0 40px rgba(0, 0, 0, 0.5);
+  border: 2px solid #362921;
+}
+
+.search-desk-inner {
+  background: radial-gradient(ellipse at 50% 15%, #221c17 0%, #171310 100%);
+  border: 1px solid rgba(82, 68, 57, 0.5);
+  border-radius: 12px;
+  padding: 34px 28px 30px;
+  box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.7);
+}
+
+.search-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.search-title {
+  font-family: var(--font-heading);
+  font-size: 34px;
+  color: #f7ede1;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+  margin-bottom: 6px;
+}
+
+.search-subtitle {
+  color: var(--text-muted);
+  font-size: 16px;
+  font-style: italic;
+  margin-bottom: 14px;
+}
+
+.search-input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-input-icon {
+  position: absolute;
+  left: 16px;
+  font-size: 18px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.cozy-search-input {
+  width: 100%;
+  padding: 14px 44px 14px 46px;
+  background: var(--bg-input);
+  border: 1.5px solid var(--border-light);
+  border-radius: 14px;
+  color: #fcf8f2;
+  font-family: var(--font-body);
+  font-size: 18px;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+.cozy-search-input:focus {
+  outline: none;
+  border-color: var(--gold-accent);
+  box-shadow: 0 0 16px rgba(201, 167, 105, 0.25), inset 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+.search-clear-btn {
+  position: absolute;
+  right: 14px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 6px;
+  transition: color 0.2s;
+}
+
+.search-clear-btn:hover {
+  color: #fff;
+}
+
+/* Filter Controls Bar */
+.search-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+  background: rgba(18, 15, 13, 0.6);
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border-dim);
+}
+
+.filter-control-item {
+  flex: 1 1 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.filter-control-item label {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cozy-select {
+  padding: 8px 12px;
+  background: var(--bg-card-inner);
+  border: 1px solid var(--border-dim);
+  border-radius: 8px;
+  color: var(--text-parchment);
+  font-family: var(--font-body);
+  font-size: 15px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.cozy-select:focus {
+  outline: none;
+  border-color: var(--gold-accent);
+}
+
+.filter-btn-box {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.btn-clear-filters {
+  padding: 8px 14px;
+  font-size: 14px;
+}
+
+.search-results-meta {
+  font-size: 14px;
+  color: var(--text-gold);
+  letter-spacing: 0.5px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--border-dim);
+  padding-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.search-section {
+  margin-bottom: 26px;
+}
+
+.search-section-title {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  color: #e6dac8;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+/* Books Grid in Search */
+.search-books-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.search-book-card {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-dim);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-gentle);
+  position: relative;
+}
+
+.search-book-card:hover {
+  background: var(--bg-card-inner);
+  border-color: var(--gold-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+}
+
+.search-book-spine-mini {
+  width: 14px;
+  min-width: 14px;
+  border-radius: 2px;
+  box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.search-book-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.search-book-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #fff;
+  line-height: 1.3;
+  margin-bottom: 3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.search-book-author {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.search-book-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.search-badge {
+  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: 8px;
+  background: rgba(82, 68, 57, 0.35);
+  color: var(--text-parchment);
+}
+
+.search-badge.lib-badge {
+  background: rgba(201, 167, 105, 0.15);
+  color: var(--text-gold);
+  border: 1px solid rgba(201, 167, 105, 0.3);
+}
+
+/* Quotes in Search */
+.search-quotes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.search-quote-item {
+  padding: 14px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-dim);
+  border-left: 3px solid var(--gold-accent);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s var(--ease-gentle);
+}
+
+.search-quote-item:hover {
+  background: var(--bg-card-inner);
+  transform: translateX(4px);
+}
+
+.search-quote-text {
+  font-size: 16px;
+  font-style: italic;
+  color: #f7ede1;
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+
+.search-quote-citation {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.search-footer-nav, .quotes-footer-nav {
+  text-align: center;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--border-dim);
+}
+
+/* ==========================================================================
+   Screen 4: Commonplace Quotes Journal
+   ========================================================================== */
+.quotes-journal-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 24px 16px 50px;
+  min-height: 80vh;
+}
+
+.quotes-journal-card {
+  width: 100%;
+  max-width: 820px;
+  background: var(--bg-card);
+  border-radius: 20px;
+  box-shadow: 0 14px 45px rgba(0, 0, 0, 0.75), inset 0 0 40px rgba(0, 0, 0, 0.5);
+  border: 2px solid #362921;
+}
+
+.quotes-journal-inner {
+  background: radial-gradient(ellipse at 50% 15%, #221c17 0%, #171310 100%);
+  border: 1px solid rgba(82, 68, 57, 0.5);
+  border-radius: 12px;
+  padding: 34px 28px 30px;
+  box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.7);
+}
+
+.quotes-header {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.quotes-title {
+  font-family: var(--font-heading);
+  font-size: 34px;
+  color: #f7ede1;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+  margin-bottom: 6px;
+}
+
+.quotes-subtitle {
+  color: var(--text-muted);
+  font-size: 16px;
+  font-style: italic;
+  margin-bottom: 14px;
+}
+
+/* Quote of Evening Card */
+.quote-of-evening-card {
+  background: linear-gradient(135deg, rgba(46, 36, 28, 0.8) 0%, rgba(26, 20, 16, 0.9) 100%);
+  border: 1.5px solid rgba(201, 167, 105, 0.45);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), inset 0 0 30px rgba(201, 167, 105, 0.1);
+  position: relative;
+}
+
+.evening-card-badge {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-gold);
+}
+
+.btn-shuffle-evening {
+  background: rgba(23, 19, 16, 0.7);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 13px;
+  color: var(--text-parchment);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-shuffle-evening:hover {
+  background: rgba(201, 167, 105, 0.2);
+  border-color: var(--gold-accent);
+  color: #fff;
+}
+
+.evening-quote-text {
+  font-size: 20px;
+  font-style: italic;
+  line-height: 1.6;
+  color: #fcf6ee;
+  margin-bottom: 10px;
+}
+
+.evening-quote-cite {
+  font-size: 15px;
+  color: var(--text-gold);
+  text-align: right;
+}
+
+.quotes-action-bar {
+  margin-bottom: 24px;
+}
+
+.quotes-section-heading {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  color: #e6dac8;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--border-dim);
+  padding-bottom: 8px;
+}
+
+.quotes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+.quote-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-dim);
+  border-radius: 12px;
+  padding: 18px 20px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.2s var(--ease-gentle);
+  position: relative;
+}
+
+.quote-card:hover {
+  border-color: rgba(201, 167, 105, 0.45);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.6);
+}
+
+.quote-card-body {
+  margin-bottom: 14px;
+}
+
+.quote-card-text {
+  font-size: 17px;
+  font-style: italic;
+  color: #f7ede1;
+  line-height: 1.55;
+  margin-bottom: 10px;
+}
+
+.quote-card-source {
+  font-size: 14px;
+  color: var(--text-gold);
+}
+
+.quote-card-notes {
+  margin-top: 8px;
+  font-size: 13px;
+  font-style: normal;
+  color: var(--text-muted);
+  background: rgba(14, 12, 11, 0.45);
+  border-left: 2px solid var(--border-light);
+  padding: 6px 10px;
+  border-radius: 0 6px 6px 0;
+}
+
+.quote-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  border-top: 1px dashed var(--border-dim);
+  padding-top: 10px;
+}
+
+.btn-quote-action {
+  background: none;
+  border: 1px solid var(--border-dim);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 13px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-quote-action:hover {
+  background: rgba(201, 167, 105, 0.15);
+  border-color: var(--gold-accent);
+  color: #fff;
+}
+
+.btn-quote-action.danger:hover {
+  background: rgba(196, 69, 64, 0.2);
+  border-color: #d46661;
+  color: #f7b2af;
+}
+
+/* Modals & Dialogs Extra Styles */
+.tavern-dialog-card {
+  padding: 24px;
+}
+
+.tavern-dialog-content {
+  margin: 14px 0 20px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-parchment);
+}
+
+/* Responsive adjustments for new features */
+@media (max-width: 768px) {
+  .reading-status-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .search-filter-bar {
+    flex-direction: column;
+  }
+  .filter-control-item {
+    flex: 1 1 100%;
+  }
+  .quotes-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --------------------------------------------------------------------------
    17. Accessibility: Prefers-Reduced-Motion
    -------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {

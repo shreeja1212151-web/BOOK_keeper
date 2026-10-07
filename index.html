@@ -256,7 +256,15 @@
     <div class="dock-left">
       <button type="button" class="dock-btn" id="btn-dock-menu" title="Open Today's Menu" aria-label="Go to Today's Menu">
         <span class="dock-icon">☕</span>
-        <span class="dock-label">Today's Menu</span>
+        <span class="dock-label">Menu</span>
+      </button>
+      <button type="button" class="dock-btn" id="btn-dock-search" title="Search All Shelves" aria-label="Search All Shelves">
+        <span class="dock-icon">🔍</span>
+        <span class="dock-label">Search</span>
+      </button>
+      <button type="button" class="dock-btn" id="btn-dock-quotes" title="Quotes Journal" aria-label="Quotes Journal">
+        <span class="dock-icon">📜</span>
+        <span class="dock-label">Quotes</span>
       </button>
     </div>
     
@@ -292,7 +300,7 @@
     <div class="dock-right">
       <button type="button" class="dock-btn" id="btn-open-side-drawer" title="Open Side Menu" aria-label="Open Side Menu">
         <span class="dock-icon">☰</span>
-        <span class="dock-label">Menu</span>
+        <span class="dock-label">More</span>
       </button>
     </div>
   </header>
@@ -317,11 +325,16 @@
                 <div class="menu-divider-line"></div>
               </div>
 
-              <!-- Primary Action: Create New Library -->
+              <!-- Primary Actions: Create New Library & Wishlist Shelf -->
               <div class="menu-actions">
                 <button type="button" class="btn-menu-action" id="btn-menu-create-lib">
                   <span class="btn-action-icon">📖</span>
                   <span class="btn-action-text">Create New Library</span>
+                  <span class="btn-action-arrow">→</span>
+                </button>
+                <button type="button" class="btn-menu-action btn-wishlist-action" id="btn-menu-wishlist-action">
+                  <span class="btn-action-icon">🎀</span>
+                  <span class="btn-action-text" id="btn-menu-wishlist-text">THE WISHLIST</span>
                   <span class="btn-action-arrow">→</span>
                 </button>
               </div>
@@ -336,8 +349,7 @@
 
                 <!-- Empty State -->
                 <div class="menu-empty-state" id="menu-empty-state">
-                  <p class="empty-quote">"A room without books is like a body without a soul."</p>
-                  <p class="empty-hint">You haven't opened any libraries yet. Create your first reading room or load a cozy sample library!</p>
+                  <div class="tavern-lady-empty" id="menu-empty-tavern-box"></div>
                   <button type="button" class="btn-secondary" id="btn-load-sample-empty">
                     ☕ Load "The Midnight Study" Sample
                   </button>
@@ -346,6 +358,9 @@
 
               <!-- Menu Board Footer (Backup & Sample actions) -->
               <div class="menu-footer">
+                <p class="storage-reminder-note">
+                  🕯️ Your shelves are kept on this device. Use "Save my libraries" to keep a backup.
+                </p>
                 <div class="backup-button-row">
                   <button type="button" class="btn-text-action" id="btn-backup-export" title="Download your libraries as a JSON file">
                     💾 Save my libraries
@@ -446,6 +461,9 @@
             </button>
           </div>
 
+          <!-- Shelf Empty State Message (Tavern Lady) -->
+          <div class="shelf-empty-tavern-box" id="shelf-empty-state" hidden></div>
+
           <!-- Shelf Base Floorboard -->
           <div class="shelf-base"></div>
         </div>
@@ -477,6 +495,189 @@
       </div>
     </section>
 
+    <!-- ========================================== -->
+    <!-- SCREEN 3: UNIVERSAL SEARCH & FILTERS       -->
+    <!-- ========================================== -->
+    <section class="view-panel" id="view-search" aria-label="Search Screen" hidden>
+      <div class="search-desk-wrapper">
+        <div class="search-desk-card">
+          <div class="menu-scallop-border">
+            <div class="search-desk-inner">
+              <div class="search-header">
+                <div class="menu-ornament-top">❧ 🔍 ❧</div>
+                <h1 class="search-title">The Archive Search</h1>
+                <p class="search-subtitle">Search across all reading rooms, book titles, authors, and gathered quotes</p>
+                <div class="menu-divider-line"></div>
+              </div>
+
+              <!-- Search Input Box -->
+              <div class="search-input-group">
+                <span class="search-input-icon">🔍</span>
+                <input type="search" id="input-search-query" class="cozy-search-input" placeholder="Search by title, author, genre, or quote..." autocomplete="off">
+                <button type="button" id="btn-search-clear-input" class="search-clear-btn" title="Clear input" hidden>✕</button>
+              </div>
+
+              <!-- Filter Controls Bar -->
+              <div class="search-filter-bar">
+                <div class="filter-control-item">
+                  <label for="filter-library-select">Library</label>
+                  <select id="filter-library-select" class="cozy-select">
+                    <option value="all">All Shelves</option>
+                  </select>
+                </div>
+
+                <div class="filter-control-item">
+                  <label for="filter-genre-select">Genre</label>
+                  <select id="filter-genre-select" class="cozy-select">
+                    <option value="all">All Genres</option>
+                  </select>
+                </div>
+
+                <div class="filter-control-item">
+                  <label for="filter-sticker-select">Remark</label>
+                  <select id="filter-sticker-select" class="cozy-select">
+                    <option value="all">All Remarks</option>
+                    <option value="heart">Loved 🤍</option>
+                    <option value="cross">Dropped ❌</option>
+                    <option value="neutral">Neutral 😐</option>
+                    <option value="none">No Sticker</option>
+                  </select>
+                </div>
+
+                <div class="filter-control-item">
+                  <label for="filter-status-select">Reading Status</label>
+                  <select id="filter-status-select" class="cozy-select">
+                    <option value="all">All Statuses</option>
+                    <option value="to-read">To Read ⏳</option>
+                    <option value="reading">Reading 📖</option>
+                    <option value="finished">Finished ✨</option>
+                    <option value="not-set">Not set</option>
+                  </select>
+                </div>
+
+                <div class="filter-control-item">
+                  <label for="filter-sort-select">Sort By</label>
+                  <select id="filter-sort-select" class="cozy-select">
+                    <option value="title">Title (A–Z)</option>
+                    <option value="author">Author (A–Z)</option>
+                    <option value="date-newest">Date Added (Newest)</option>
+                    <option value="date-oldest">Date Added (Oldest)</option>
+                  </select>
+                </div>
+
+                <div class="filter-control-item filter-btn-box">
+                  <label>&nbsp;</label>
+                  <button type="button" class="btn-secondary btn-clear-filters" id="btn-clear-filters">
+                    Reset Filters
+                  </button>
+                </div>
+              </div>
+
+              <!-- Search Results Counter -->
+              <div class="search-results-meta" id="search-results-meta">
+                <span id="search-count-label">0 stories and 0 quotes found</span>
+              </div>
+
+              <!-- Books Section -->
+              <div class="search-section" id="search-books-section">
+                <h2 class="search-section-title">Stories</h2>
+                <div class="search-books-grid" id="search-books-container">
+                  <!-- Dynamically populated -->
+                </div>
+              </div>
+
+              <!-- Quotes Section -->
+              <div class="search-section" id="search-quotes-section">
+                <h2 class="search-section-title">Quotes Found</h2>
+                <div class="search-quotes-list" id="search-quotes-container">
+                  <!-- Dynamically populated -->
+                </div>
+              </div>
+
+              <!-- Tavern Lady Empty State -->
+              <div class="search-empty-box" id="search-empty-state" hidden>
+                <!-- Injected dynamically via TavernLady -->
+              </div>
+
+              <div class="search-footer-nav">
+                <button type="button" class="btn-text-action" id="btn-search-back-menu">
+                  ← Return to Today's Menu
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SCREEN 4: COMMONPLACE QUOTES JOURNAL       -->
+    <!-- ========================================== -->
+    <section class="view-panel" id="view-quotes" aria-label="Quotes Journal Screen" hidden>
+      <div class="quotes-journal-wrapper">
+        <div class="quotes-journal-card">
+          <div class="menu-scallop-border">
+            <div class="quotes-journal-inner">
+              <div class="quotes-header">
+                <div class="menu-ornament-top">❧ 📜 ❧</div>
+                <h1 class="quotes-title">The Commonplace Book</h1>
+                <p class="quotes-subtitle">Passages, reflections, and treasured words gathered from your reading</p>
+                <div class="menu-divider-line"></div>
+              </div>
+
+              <!-- Quote of the Evening Illuminated Card -->
+              <div class="quote-of-evening-card" id="quote-evening-card">
+                <div class="evening-card-badge">
+                  <span>🌙 Quote of the Evening</span>
+                  <button type="button" class="btn-shuffle-evening" id="btn-shuffle-evening" title="Draw another random quote" aria-label="Draw another random quote">
+                    🔀 Draw Another
+                  </button>
+                </div>
+                <div class="evening-quote-body">
+                  <blockquote class="evening-quote-text" id="evening-quote-text">
+                    "Words are, in my not-so-humble opinion, our most inexhaustible source of magic."
+                  </blockquote>
+                  <div class="evening-quote-cite" id="evening-quote-cite">
+                    — <span class="cite-author">J.K. Rowling</span>, <em class="cite-book">Harry Potter and the Deathly Hallows</em>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Inscribe Action Bar -->
+              <div class="quotes-action-bar">
+                <button type="button" class="btn-menu-action" id="btn-open-quote-modal">
+                  <span class="btn-action-icon">✒️</span>
+                  <span class="btn-action-text">Inscribe a New Quote</span>
+                  <span class="btn-action-arrow">+</span>
+                </button>
+              </div>
+
+              <!-- Quotes List Container -->
+              <div class="quotes-list-section">
+                <h2 class="quotes-section-heading">Gathered Quotes</h2>
+                <div class="quotes-grid" id="quotes-list-container">
+                  <!-- Dynamically populated quote cards -->
+                </div>
+
+                <!-- Empty State -->
+                <div class="quotes-empty-box" id="quotes-empty-state" hidden>
+                  <!-- Injected dynamically via TavernLady -->
+                </div>
+              </div>
+
+              <div class="quotes-footer-nav">
+                <button type="button" class="btn-text-action" id="btn-quotes-back-menu">
+                  ← Return to Today's Menu
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- ========================================== -->
@@ -495,15 +696,39 @@
     </div>
 
     <div class="drawer-content">
+      <!-- Section: Study Navigation -->
+      <div class="drawer-section">
+        <h3 class="drawer-section-title">Study Navigation</h3>
+        <div class="drawer-nav-stack">
+          <button type="button" class="drawer-link-btn" id="btn-drawer-nav-menu">
+            ☕ Today's Menu
+          </button>
+          <button type="button" class="drawer-link-btn" id="btn-drawer-nav-search">
+            🔍 Search All Shelves
+          </button>
+          <button type="button" class="drawer-link-btn" id="btn-drawer-nav-quotes">
+            📜 Commonplace Quotes
+          </button>
+          <button type="button" class="drawer-link-btn" id="btn-drawer-nav-wishlist">
+            🎀 THE WISHLIST
+          </button>
+        </div>
+      </div>
+
       <!-- Section: Library Switcher -->
       <div class="drawer-section">
         <h3 class="drawer-section-title">Your Libraries</h3>
         <ul class="drawer-library-list" id="drawer-library-list">
           <!-- Dynamic library links -->
         </ul>
-        <button type="button" class="btn-drawer-action" id="btn-drawer-create-lib">
-          + Create New Library
-        </button>
+        <div class="drawer-btn-stack">
+          <button type="button" class="btn-drawer-action" id="btn-drawer-create-lib">
+            + Create New Library
+          </button>
+          <button type="button" class="btn-drawer-action secondary" id="btn-drawer-create-wishlist">
+            🎀 + THE WISHLIST
+          </button>
+        </div>
       </div>
 
       <!-- Section: Current Library Management -->
@@ -529,7 +754,7 @@
       <!-- Section: Data Preservation -->
       <div class="drawer-section">
         <h3 class="drawer-section-title">Data & Backups</h3>
-        <p class="drawer-hint">Your books live in your browser's private memory. Save a backup copy to keep them safe forever.</p>
+        <p class="drawer-hint">Your shelves are kept on this device. Use 'Save my libraries' to keep a backup.</p>
         <div class="drawer-btn-stack">
           <button type="button" class="btn-drawer-action secondary" id="btn-drawer-export">
             💾 Save my libraries (.json)
@@ -554,6 +779,9 @@
       <p class="quick-book-author" id="quick-book-author">By Author Name</p>
       
       <div class="quick-book-actions">
+        <button type="button" class="btn-quick-action wishlist-action" id="btn-quick-wishlist-gotit" hidden title="Move from wishlist to a shelf">
+          ✨ Got it!
+        </button>
         <button type="button" class="btn-quick-action" id="btn-quick-move" title="Move story to another library">
           ⇄ Move
         </button>
@@ -582,6 +810,9 @@
           <div class="details-meta-text">
             <p class="details-author-line"><strong>Author:</strong> <span id="details-author">Donna Tartt</span></p>
             <p class="details-genre-line"><strong>Genre:</strong> <span id="details-genre">Dark Academia / Fiction</span></p>
+            <p class="details-status-line" id="details-status-row">
+              <strong>Reading Status:</strong> <span class="status-badge-pill" id="details-status-pill">Not set</span>
+            </p>
           </div>
           <!-- Cute sticker badge beside details -->
           <div class="details-sticker-badge" id="details-sticker-container" title="Book remark sticker">
@@ -595,9 +826,23 @@
             No notes written yet for this story.
           </div>
         </div>
+
+        <!-- Quotes belonging to this book -->
+        <div class="details-quotes-box" id="details-quotes-box">
+          <div class="details-quotes-header">
+            <h4 class="details-desc-heading">Quotes from this Story</h4>
+            <button type="button" class="btn-text-small" id="btn-details-add-quote">+ Inscribe Quote</button>
+          </div>
+          <div class="details-quotes-list" id="details-quotes-list">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
       </div>
 
       <div class="details-footer">
+        <button type="button" class="btn-primary wishlist-action" id="btn-details-wishlist-gotit" hidden>
+          ✨ Got it! Move to a shelf
+        </button>
         <button type="button" class="btn-secondary" id="btn-details-delete">
           🗑️ Delete Story
         </button>
@@ -744,6 +989,35 @@
           <input type="text" id="input-book-author" maxlength="80" placeholder="e.g. Oscar Wilde">
         </div>
 
+        <!-- Reading Status (Optional) -->
+        <div class="form-group">
+          <label id="label-book-status">Reading Status (Optional)</label>
+          <div class="reading-status-grid" role="radiogroup" aria-labelledby="label-book-status">
+            <label class="status-choice-card">
+              <input type="radio" name="book-status" value="not-set" checked>
+              <span class="status-chip-label">Not set</span>
+            </label>
+            <label class="status-choice-card">
+              <input type="radio" name="book-status" value="to-read">
+              <span class="status-chip-label">⏳ To Read</span>
+            </label>
+            <label class="status-choice-card">
+              <input type="radio" name="book-status" value="reading">
+              <span class="status-chip-label">📖 Reading</span>
+            </label>
+            <label class="status-choice-card">
+              <input type="radio" name="book-status" value="finished">
+              <span class="status-chip-label">✨ Finished</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Reading Progress (Optional) -->
+        <div class="form-group" id="group-book-progress">
+          <label for="input-book-progress">Reading Progress (Optional)</label>
+          <input type="text" id="input-book-progress" maxlength="40" placeholder="e.g. Page 142, Chapter 8...">
+        </div>
+
         <!-- Spine Colour Picker (Colour Wheel) -->
         <div class="form-group">
           <label>Spine Colour</label>
@@ -888,6 +1162,71 @@
 
       <div class="modal-actions">
         <button type="button" class="btn-secondary" id="btn-move-cancel">Cancel</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- ========================================== -->
+  <!-- MODAL 9: INSCRIBE / EDIT QUOTE FORM        -->
+  <!-- ========================================== -->
+  <dialog class="cozy-modal modal-form-dialog" id="modal-quote-form">
+    <form class="cozy-form" id="form-quote" method="dialog">
+      <div class="form-header">
+        <h2 class="modal-title" id="quote-form-title">Inscribe a Quote</h2>
+        <button type="button" class="modal-close-btn" id="btn-quote-form-close" aria-label="Close quote form">✕</button>
+      </div>
+      <div class="form-body">
+        <div class="form-group">
+          <label for="input-quote-text">Quote Text *</label>
+          <textarea id="input-quote-text" rows="4" required placeholder="Type or paste the memorable passage..."></textarea>
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-group flex-2">
+            <label for="select-quote-book">Book *</label>
+            <select id="select-quote-book" class="cozy-select">
+              <option value="">— Select from your shelves —</option>
+              <option value="__custom__">Custom / Other Book Title...</option>
+            </select>
+          </div>
+          <div class="form-group flex-1">
+            <label for="input-quote-page">Page / Chapter</label>
+            <input type="text" id="input-quote-page" maxlength="30" placeholder="e.g. p. 42">
+          </div>
+        </div>
+
+        <div class="form-group" id="group-quote-custom-book" hidden>
+          <label for="input-quote-custom-book">Book Title *</label>
+          <input type="text" id="input-quote-custom-book" maxlength="120" placeholder="Enter book title...">
+        </div>
+
+        <div class="form-group">
+          <label for="input-quote-author">Author (Optional)</label>
+          <input type="text" id="input-quote-author" maxlength="80" placeholder="e.g. Mary Shelley">
+        </div>
+
+        <div class="form-group">
+          <label for="input-quote-notes">Personal Note / Reflection (Optional)</label>
+          <textarea id="input-quote-notes" rows="2" placeholder="Why this passage touched you, favorite moment..."></textarea>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" id="btn-cancel-quote-form">Cancel</button>
+        <button type="submit" class="btn-primary" id="btn-submit-quote-form">Inscribe in Journal</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- ========================================== -->
+  <!-- MODAL 13: TAVERN LADY NOTICE DIALOG        -->
+  <!-- ========================================== -->
+  <dialog class="cozy-modal modal-small modal-tavern-dialog" id="modal-tavern-message">
+    <div class="confirm-card tavern-dialog-card">
+      <div class="confirm-icon" id="tavern-dialog-icon">🕯️</div>
+      <h3 class="modal-title" id="tavern-dialog-title">Words from the Keeper</h3>
+      <div class="tavern-dialog-content" id="tavern-dialog-content"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn-primary" id="btn-tavern-dialog-close">Thank you</button>
       </div>
     </div>
   </dialog>
